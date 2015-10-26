@@ -66,13 +66,19 @@ pi0_kinE        # vector<float>
 ## Tuning data location
 
 A first ROOT tree with tuning data can be found here:
-/afs/cern.ch/work/l/lveldere/public/showers_pi_kinE10_eta0.root
 
 Properties of primary particle:
    * type: pi+
    * kinetic energy: 10 GeV
    * origin: (0,0,0)
    * theta = 0 (theta: opening angle between postive z-axis and particle direction) 
+
+Geometry: flat, idealised barrel calorimeter
+
+/afs/cern.ch/work/l/lveldere/public/showers_pi_kinE10_eta0.root
+
+
+
 
 
 
