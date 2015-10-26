@@ -1,5 +1,9 @@
 # HadShowerTuning
 
+## Installation
+
+See (INSTALL.md)[INSTALL.md]
+
 ## Generation of tuning data
 
 Tuning data is generated with the help of geant4.
