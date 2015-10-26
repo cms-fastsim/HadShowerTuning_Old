@@ -10,6 +10,8 @@ of proper thichness and material.
 No magnetic field is applied.
 The volume around the calorimeter is filled with air.
 
+Read more in HadShowerTuning/DataGeneration/README.md (under construction)
+
 ## Tuning data format
 
 The tuning data is stored in ROOT trees.
