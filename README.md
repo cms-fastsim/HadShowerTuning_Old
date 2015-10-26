@@ -2,7 +2,7 @@
 
 ## Installation
 
-See (INSTALL.md)[INSTALL.md]
+See [INSTALL.md](INSTALL.md)
 
 ## Generation of tuning data
 
