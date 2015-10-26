@@ -1,6 +1,6 @@
 # Installation
 
-*note: * these instructions are under construction
+**note**: these instructions are under construction
 
 ## Get package
 
@@ -17,6 +17,9 @@ cmsrel CMSSW_7_4_0
 cd CMSSW_7_4_0/src
 cmsenv
 ```
+
+**Note**: things will also work with many other CMSSW versions.
+
 ## Geant4 installation (optional)
 
 **Note**: 
@@ -25,18 +28,21 @@ cmsenv
    * the Geant4 installation will require about 1 GB of storage
    * there might be a way to use the geant4 install provided by CMSSW. This option has not been fully explored yet.
 
-Retrieve [the geant4 source code](http://geant4.web.cern.ch/geant4/support/download.shtml)
-For further instructions we assume you take version 10.01.p02, stored in tar.gz format.
+Pick/create a directory in which you want to install Geant4 and move to this directory,
 
-Pick/create a directory in which you want to install Geant4,
-move geant4.10.01.p02.tar.gz and yourself to this directory,
-and run the installation script under HadShower/installGeant4.sh
+Download version 10.01.p02 of the geant4 source code [from here](http://geant4.web.cern.ch/geant4/support/download.shtml)
+and store it in your current directory (filename geant4.10.01.p02.tar.gz).
+
+Install
 
 ```
 source /path/to/.../HadShower/installGeant4.sh
 ```
 
-Now you should have geant4 installed under $mypwd/geant4.10.01.p02-install
+Now you should have geant4 installed under $PWD/geant4.10.01.p02-install
+
+**Note**: things will also work with many other Geant4 versions,
+but you'll have to edit the installGeant4.sh file to account for the different version number in paths.
 
 ## Setup the HadShowerTuning package
 
@@ -60,4 +66,6 @@ source setup.sh
 ```
 
 Now you should have a file setenv.sh.
-Run this file whenever you want to run or compile the code in HadShowerTuning.
+Whenever you run this script,
+your environement will be ready to
+compile and run the code in HadShowerTuning.
