@@ -4,6 +4,20 @@
 
 See [INSTALL.md](INSTALL.md)
 
+## Tuning datasets
+
+A first ROOT tree with tuning data can be found here:
+
+Properties of primary particle:
+   * type: pi+
+   * kinetic energy: 10 GeV
+   * origin: (0,0,0)
+   * theta = 0 (theta: opening angle between postive z-axis and particle direction) 
+
+Geometry: flat, idealised barrel calorimeter
+
+/afs/cern.ch/work/l/lveldere/public/showers_pi_kinE10_eta0.root
+
 ## Generation of tuning data
 
 Tuning data is generated with the help of geant4.
@@ -31,57 +45,44 @@ The z-coordinate of each layer corresponds to the r-coordinate of the correspond
 # each tree entry corresponds to one shower
 
 # Basic properties of energy depositions
-hit_energy      # vector<float>
-hit_x           # vector<float>
-hit_y           # vector<float>
-hit_z           # vector<float>
+hit_energy        # vector<float>
+hit_x             # vector<float>
+hit_y             # vector<float>
+hit_z             # vector<float>
+hit_volume_id     # vector<int>  
+hit_particleIndex # vector<int>
 
+# hit_volume_id :
 # Each calorimeter layer is given an id number.
 # The self-explenatory name of the corresponding layer can be looked up in the auxiliary tree name volumeIdMap
-hit_volume_id   # vector<int>  
 
-# each pi0 produced in hadronic inelastic interactions in showers are stored in the tree (see further)
-# when a hit is associated to such a pi0, the index of the pi0 is stored
-# when a hit is not associated, the value -1 is stored
-hit_pi0_index   # vector<int>
+# hit_particleIndex:
+# the primary particle and certain particles inside the shower are stored (see below)
+# each hit i is associated to the particle with index hit_particleIndex[i] 
+# a hit associated to a particle is produced by the particle or by a particle further downstream
 
 # location of the first inelastic hadronic interaction
 showerStart_x   # float
 showerStart_y   # float
 showerStart_z   # float
 
-# type, momentum, and kinematic energy of the primary at the origin
-# note: properties might be altered between origin and shower start
-primary_px      # float
-primary_py      # float
-primary_pz      # float
-primary_pdgId   # int
-primary_kinE    # float
 
-# each pi0 produced in hadronic interactions in showers are stored in the tree
-# the stored properties are position, momentum and kinetic energy at the point of interaction
-pi0_x           # vector<float>
-pi0_y           # vector<float>
-pi0_z           # vector<float>
-pi0_px          # vector<float>
-pi0_py          # vector<float>
-pi0_pz          # vector<float>
-pi0_kinE        # vector<float>
+# a selection of particle is stored in the particle list
+# the primary particle is always stored with index 0
+# all secondaries of the first inelastic interaction are stored
+# all electrons that initiate EM showers are stored
+# the parents of those electrons are stored (mostly photons)
+# the parents of those photons are stored (mostly pi0s)
+particle_x           # vector<float>
+particle_y           # vector<float>
+particle_z           # vector<float>
+particle_px          # vector<float>
+particle_py          # vector<float>
+particle_pz          # vector<float>
+particle_kinE        # vector<float>
+particle_parentIndex # vector<int>
 ```
 
-## Tuning data location
-
-A first ROOT tree with tuning data can be found here:
-
-Properties of primary particle:
-   * type: pi+
-   * kinetic energy: 10 GeV
-   * origin: (0,0,0)
-   * theta = 0 (theta: opening angle between postive z-axis and particle direction) 
-
-Geometry: flat, idealised barrel calorimeter
-
-/afs/cern.ch/work/l/lveldere/public/showers_pi_kinE10_eta0.root
 
 
 
