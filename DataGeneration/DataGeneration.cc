@@ -55,22 +55,19 @@ int main(int argc,char** argv){
   tree->Branch("hit_y",&data.hit_y);
   tree->Branch("hit_z",&data.hit_z);
   tree->Branch("hit_volume_id",&data.hit_volume_id);
-  tree->Branch("hit_pi0_index",&data.hit_pi0_index);
+  tree->Branch("hit_particleIndex",&data.hit_particleIndex);
   tree->Branch("showerStart_x",&data.showerStart_x,"showerStart_x/F");
   tree->Branch("showerStart_y",&data.showerStart_y,"showerStart_y/F");
   tree->Branch("showerStart_z",&data.showerStart_z,"showerStart_z/F");
-  tree->Branch("primary_px",&data.primary_px,"primary_px/F");
-  tree->Branch("primary_py",&data.primary_py,"primary_py/F");
-  tree->Branch("primary_pz",&data.primary_pz,"primary_pz/F");
-  tree->Branch("primary_pdgId",&data.primary_pdgId,"primary_pdgId/I");
-  tree->Branch("primary_kinE",&data.primary_kinE,"primary_kinE/F");
-  tree->Branch("pi0_x",&data.pi0_x);
-  tree->Branch("pi0_y",&data.pi0_y);
-  tree->Branch("pi0_z",&data.pi0_z);
-  tree->Branch("pi0_px",&data.pi0_px);
-  tree->Branch("pi0_py",&data.pi0_py);
-  tree->Branch("pi0_pz",&data.pi0_pz);
-  tree->Branch("pi0_kinE",&data.pi0_kinE);
+  tree->Branch("particle_x",&data.particle_x);
+  tree->Branch("particle_y",&data.particle_y);
+  tree->Branch("particle_z",&data.particle_z);
+  tree->Branch("particle_px",&data.particle_px);
+  tree->Branch("particle_py",&data.particle_py);
+  tree->Branch("particle_pz",&data.particle_pz);
+  tree->Branch("particle_kinE",&data.particle_kinE);
+  tree->Branch("particle_pdgId",&data.particle_pdgId);
+  tree->Branch("particle_parentIndex",&data.particle_parentIndex);
   runManager->SetUserAction(new hadshowertuning::EventAction(tree,&data));
   runManager->SetUserAction(new hadshowertuning::TrackingAction(&data));
   std::map<const G4VPhysicalVolume*,int> volumeIdMap;
@@ -108,15 +105,16 @@ int main(int argc,char** argv){
   if(ui)
     ui->SessionStart();
    
-  if(!ui){
-    int nEvents = 10000;
-    runManager->BeamOn(nEvents);
-    std::cout << "123" << std::endl;
+  if(!ui)
+  {
+      int nEvents = 1000;
+      runManager->BeamOn(nEvents);
+      std::cout << "123" << std::endl;
   }
   delete runManager;
-
-
+  
+  
   tree->Write();
   file->Close();
-   
+  
 }

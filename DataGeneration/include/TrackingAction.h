@@ -3,22 +3,23 @@
 
 #include "G4UserTrackingAction.hh"
 
-namespace hadshowertuning {
-  class Data;
+namespace hadshowertuning 
+{
+    class Data;
+    class TrackInformation;
 
 
-  class TrackingAction : public G4UserTrackingAction 
-  {
-  public:
-    TrackingAction(hadshowertuning::Data * data);
-    virtual ~TrackingAction(){};
-    
-    virtual void PreUserTrackingAction(const G4Track*);
-    virtual void PostUserTrackingAction(const G4Track*);
-  private:
-    hadshowertuning::Data * fData;
-    bool fFoundShowerStart;
-  };
+    class TrackingAction : public G4UserTrackingAction 
+    {
+    public:
+	TrackingAction(hadshowertuning::Data * data);
+	virtual void PreUserTrackingAction(const G4Track*);
+	virtual void PostUserTrackingAction(const G4Track*);
+    private:
+	TrackInformation * storeParticle(G4Track * aTrack,int parentIndex);
+	hadshowertuning::Data * fData;
+	bool fFoundShowerStart;
+    };
 }
 
 #endif
