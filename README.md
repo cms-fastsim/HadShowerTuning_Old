@@ -16,7 +16,9 @@ Properties of primary particle:
 
 Geometry: flat, idealised barrel calorimeter
 
-/afs/cern.ch/work/l/lveldere/public/showers_pi_kinE10_eta0.root
+```
+/afs/cern.ch/work/l/lveldere/public/showers_pi_kinE10_eta0_V2.root
+```
 
 ## Generation of tuning data
 
