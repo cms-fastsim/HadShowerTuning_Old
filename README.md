@@ -4,6 +4,9 @@
 
 See [INSTALL.md](INSTALL.md)
 
+Note: analysis of tuing data does not require to install anything specifically (yet).
+You just need ROOT.
+
 ## Analayis of tuning datasets
 
 See [DataAnalysis/README.md](DataAnalysis/README.md)
