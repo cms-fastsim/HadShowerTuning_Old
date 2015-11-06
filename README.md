@@ -6,11 +6,11 @@ See [INSTALL.md](INSTALL.md)
 
 ## Analayis of tuning datasets
 
-See [DataAnalysis/README.md]
+See [DataAnalysis/README.md](DataAnalysis/README.md)
 
 ## Tuning datasets
 
-Barrel geometry ([DataGeneration/geometry_barrel.txt])
+Barrel geometry ([DataGeneration/geometry_barrel.txt](DataGeneration/geometry_barrel.txt))
 ```
 # pdgId = 211, origin = (0,0,0), theta = 0
 # kinE = 10 GeV
@@ -34,7 +34,7 @@ Read more in HadShowerTuning/DataGeneration/README.md (under construction)
 ## Understanding geometry files
 
 geometries are defined in txt files, e.g.
-[DataGeneration/geometry_barrel.txt]
+[DataGeneration/geometry_barrel.txt](DataGeneration/geometry_barrel.txt)
 
 A small extract illustrates how to read these files
 ```
