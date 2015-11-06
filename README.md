@@ -75,7 +75,7 @@ hit_e             # vector<float>
 hit_x             # vector<float>
 hit_y             # vector<float>
 hit_z             # vector<float>
-hit_volume_id     # vector<int>  
+hit_volumeId      # vector<int>  
 hit_particleIndex # vector<int>
 
 # hit_volumeId :
