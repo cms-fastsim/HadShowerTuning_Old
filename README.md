@@ -4,21 +4,20 @@
 
 See [INSTALL.md](INSTALL.md)
 
+## Analayis of tuning datasets
+
+See [DataAnalysis/README.md]
+
 ## Tuning datasets
 
-A first ROOT tree with tuning data can be found here:
-
-Properties of primary particle:
-   * type: pi+
-   * kinetic energy: 10 GeV
-   * origin: (0,0,0)
-   * theta = 0 (theta: opening angle between postive z-axis and particle direction) 
-
-Geometry: flat, idealised barrel calorimeter
-
+Barrel geometry ([DataGeneration/geometry_barrel.txt])
 ```
+# pdgId = 211, origin = (0,0,0), theta = 0
+# kinE = 10 GeV
 /afs/cern.ch/work/l/lveldere/public/showers_pi_kinE10_eta0_V2.root
 ```
+
+more to come
 
 ## Generation of tuning data
 
@@ -31,6 +30,29 @@ No magnetic field is applied.
 The volume around the calorimeter is filled with air.
 
 Read more in HadShowerTuning/DataGeneration/README.md (under construction)
+
+## Understanding geometry files
+
+geometries are defined in txt files, e.g.
+[DataGeneration/geometry_barrel.txt]
+
+A small extract illustrates how to read these files
+```
+// the most inner scintilator layer HB has a thickness of 0.9 cm,
+// it is made of vinyltoluene, 
+// and it's inner side is 177.7 cm away from the center of the detector
+
+// we name this layer 'hb_sci_0'
+// we  model this with a simple BOX shape
+// along the x and y direction, the box half-width is 360 cm
+// along the z-direction, the box has a half width of 0,45 cm  (0.9 cm / 2)
+// the box is made of vinyltoluene 
+:VOLU hb_sci_0 BOX 360.0*cm 360.0*cm 0.45*cm G4_PLASTIC_SC_VINYLTOLUENE 
+
+// we place the center of the box at x=0, y=0, z=178.15 cm
+// (178.15 cm = 177.7 + 0.9/2 cm)
+:PLACE hb_sci_0 1 world R0 0.*cm 0.*cm 178.15*cm
+```
 
 ## Tuning data format
 
