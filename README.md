@@ -16,7 +16,7 @@ See [DataAnalysis/README.md](DataAnalysis/README.md)
 Barrel geometry ([DataGeneration/geometry_barrel.txt](DataGeneration/geometry_barrel.txt))
 ```
 # pdgId = 211, theta = 0 energy in [0.5,150] GeV
-/afs/cern.ch/work/l/lveldere/public/showers_V3/*.root.root
+/afs/cern.ch/work/l/lveldere/public/showers_V3/*.root
 ```
 
 more to come
