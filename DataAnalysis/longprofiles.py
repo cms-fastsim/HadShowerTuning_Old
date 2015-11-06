@@ -16,7 +16,7 @@ for e in range(0,min(showers.GetEntries(),MAXSHOWERS)):
     print "shower",e
     showers.GetEntry(e)
     # draw shower start
-    h_showerStart_z.Fill(showers.showerStart_z)
+    h_showerStart_z.Fill(showers.particle_z[1])
 
     # draw shower profile
     ofile.cd()
@@ -29,12 +29,12 @@ for e in range(0,min(showers.GetEntries(),MAXSHOWERS)):
     h_longProfile_hadronic = rt.TH1D("longProfile_hadronic","lonfProfile_hadronic",100,100,300)
     
     for hitIndex in range(0,showers.hit_x.size()):
-        h_longProfile.Fill(showers.hit_z[hitIndex],showers.hit_energy[hitIndex])
+        h_longProfile.Fill(showers.hit_z[hitIndex],showers.hit_e[hitIndex])
         if showers.hit_particleIndex[hitIndex] == 0:    # hit is related to the primary
-            h_longProfile_outsideShower.Fill(showers.hit_z[hitIndex],showers.hit_energy[hitIndex])
+            h_longProfile_outsideShower.Fill(showers.hit_z[hitIndex],showers.hit_e[hitIndex])
         else:                                            # hit is part of shower
             # the actual shower profile
-            h_longProfile_inShower.Fill(showers.hit_z[hitIndex],showers.hit_energy[hitIndex])
+            h_longProfile_inShower.Fill(showers.hit_z[hitIndex],showers.hit_e[hitIndex])
             
             # early / late pi0?
             # note: having several early pions is not unusual
@@ -57,13 +57,13 @@ for e in range(0,min(showers.GetEntries(),MAXSHOWERS)):
                 print fromEarlyPi0
             # early pi0 profile
             if fromEarlyPi0:
-                h_longProfile_earlyPi0.Fill(showers.hit_z[hitIndex],showers.hit_energy[hitIndex])
+                h_longProfile_earlyPi0.Fill(showers.hit_z[hitIndex],showers.hit_e[hitIndex])
             # late pi0
             elif fromPi0:
-                h_longProfile_latePi0.Fill(showers.hit_z[hitIndex],showers.hit_energy[hitIndex])
+                h_longProfile_latePi0.Fill(showers.hit_z[hitIndex],showers.hit_e[hitIndex])
             # hadronic
             else:
-                h_longProfile_hadronic.Fill(showers.hit_z[hitIndex],showers.hit_energy[hitIndex])
+                h_longProfile_hadronic.Fill(showers.hit_z[hitIndex],showers.hit_e[hitIndex])
                 
     rt.gDirectory.Write()
 
