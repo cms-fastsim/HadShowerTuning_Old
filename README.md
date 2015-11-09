@@ -4,17 +4,19 @@
 
 See [INSTALL.md](INSTALL.md)
 
+Note: analysis of tuing data does not require to install anything specifically (yet).
+You just need ROOT.
+
 ## Analayis of tuning datasets
 
-See [DataAnalysis/README.md]
+See [DataAnalysis/README.md](DataAnalysis/README.md)
 
 ## Tuning datasets
 
-Barrel geometry ([DataGeneration/geometry_barrel.txt])
+Barrel geometry ([DataGeneration/geometry_barrel.txt](DataGeneration/geometry_barrel.txt))
 ```
-# pdgId = 211, origin = (0,0,0), theta = 0
-# kinE = 10 GeV
-/afs/cern.ch/work/l/lveldere/public/showers_pi_kinE10_eta0_V2.root
+# pdgId = 211, theta = 0 energy in [0.5,150] GeV
+/afs/cern.ch/work/l/lveldere/public/showers_V3/*.root
 ```
 
 more to come
@@ -34,7 +36,7 @@ Read more in HadShowerTuning/DataGeneration/README.md (under construction)
 ## Understanding geometry files
 
 geometries are defined in txt files, e.g.
-[DataGeneration/geometry_barrel.txt]
+[DataGeneration/geometry_barrel.txt](DataGeneration/geometry_barrel.txt)
 
 A small extract illustrates how to read these files
 ```
@@ -69,14 +71,14 @@ The z-coordinate of each layer corresponds to the r-coordinate of the correspond
 # each tree entry corresponds to one shower
 
 # Basic properties of energy depositions
-hit_energy        # vector<float>
+hit_e             # vector<float>
 hit_x             # vector<float>
 hit_y             # vector<float>
 hit_z             # vector<float>
-hit_volume_id     # vector<int>  
+hit_volumeId      # vector<int>  
 hit_particleIndex # vector<int>
 
-# hit_volume_id :
+# hit_volumeId :
 # Each calorimeter layer is given an id number.
 # The self-explenatory name of the corresponding layer can be looked up in the auxiliary tree name volumeIdMap
 
@@ -84,12 +86,6 @@ hit_particleIndex # vector<int>
 # the primary particle and certain particles inside the shower are stored (see below)
 # each hit i is associated to the particle with index hit_particleIndex[i] 
 # a hit associated to a particle is produced by the particle or by a particle further downstream
-
-# location of the first inelastic hadronic interaction
-showerStart_x   # float
-showerStart_y   # float
-showerStart_z   # float
-
 
 # a selection of particle is stored in the particle list
 # the primary particle is always stored with index 0
@@ -107,9 +103,12 @@ particle_kinE        # vector<float>
 particle_parentIndex # vector<int>
 ```
 
-
-
-
+how to find the shower start?
+```
+showerStart_x = particle_x[1]
+showerStart_y = particle_x[1]
+showerStart_z = particle_x[1]
+```
 
 
 
