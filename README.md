@@ -103,11 +103,17 @@ particle_kinE        # vector<float>
 particle_parentIndex # vector<int>
 ```
 
-how to find the shower start?
+### how to find the shower start?
+
+The datas format is defined such that the first particle in each shower is the primary,
+and the next few particles are the products of the first inelastic hadronic interaction of the primary.
+Therefore, the position of the shower start can be found as follows:
+
 ```
-showerStart_x = particle_x[1]
-showerStart_y = particle_x[1]
-showerStart_z = particle_x[1]
+if len(paritcles_x) > 1:  # check that there was a first inelastic hadronic interaction
+    showerStart_x = particle_x[1]
+    showerStart_y = particle_x[1]
+    showerStart_z = particle_x[1]
 ```
 
 
