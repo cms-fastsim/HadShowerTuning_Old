@@ -122,9 +122,14 @@ if len(paritcles_x) > 1:  # check that there was a first inelastic hadronic inte
 
 /afs/cern.ch/work/l/lveldere/public/hadshowertuningdata_compressed_V1.tgz
 
+Yntar to find 200 root files.
+Each root file contains data for 500 showers.
+The primaries are all charged pions.
+The energy of the primaries can be extracted from the file name.
+
 ### Format
 
-Each file contains one directory per shower.
+Each root file contains directory per shower.
 
 Each directory contains 
    * finely binned longitudinal energy profiles (TH1F) for
