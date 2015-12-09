@@ -18,7 +18,7 @@ DetectorConstructionASCI::DetectorConstructionASCI()
 
 G4VPhysicalVolume * DetectorConstructionASCI::Construct(){
 
-  G4String filename = "geometry.txt";
+  G4String filename = "/nfs/dust/cms/user/lveldere/FastSimDev_Oct/g4fresh/HadShowerTuning/DataGeneration-build/geometry.txt";
   G4tgbVolumeMgr* volmgr = G4tgbVolumeMgr::GetInstance();
   volmgr->AddTextFile(filename);
   fWorld = volmgr->ReadAndConstructDetector();

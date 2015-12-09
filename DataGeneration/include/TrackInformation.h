@@ -15,7 +15,7 @@ namespace hadshowertuning
 	    : firstInBranchIndex_(-1)
 	    , particleIndex_(-1)
 	    , parentIndex_(-1)
-	    , isPartOfEMShower_(false)
+	    , inEMShower_(false)
 	    , initiatesEMShower_(false)
 	    , inHadronicShower_(false)
 	    {;}
@@ -24,7 +24,7 @@ namespace hadshowertuning
 	    : firstInBranchIndex_(info->firstInBranchIndex())
 	    , particleIndex_(info->particleIndex()) 
 	    , parentIndex_(info->parentIndex()) 
-	    , isPartOfEMShower_(info->isPartOfEMShower())
+	    , inEMShower_(info->inEMShower())
 	    , initiatesEMShower_(info->initiatesEMShower())
 	    , inHadronicShower_(info->inHadronicShower())
 	    {;}
@@ -33,7 +33,7 @@ namespace hadshowertuning
 	void setFirstInBranchIndex(int _firstInBranchIndex){firstInBranchIndex_ = _firstInBranchIndex;}
 	void setParticleIndex(int _particleIndex){particleIndex_ = _particleIndex;}
 	void setParentIndex(int _parentIndex){parentIndex_ = _parentIndex;}
-	void setIsPartOfEMShower(bool _isPartOfEMShower = true){isPartOfEMShower_ = _isPartOfEMShower;}
+	void setInEMShower(bool _inEMShower = true){inEMShower_ = _inEMShower;}
 	void setInitiatesEMShower(bool _initiatesEMShower = true){initiatesEMShower_ = _initiatesEMShower;}
 	void setInHadronicShower(bool _inHadronicShower = true){inHadronicShower_ = _inHadronicShower;}
 
@@ -41,7 +41,7 @@ namespace hadshowertuning
 	int firstInBranchIndex() const {return firstInBranchIndex_;}
 	int particleIndex() const {return particleIndex_;}
 	int parentIndex() const {return parentIndex_;}
-	bool isPartOfEMShower() const {return isPartOfEMShower_;}
+	bool inEMShower() const {return inEMShower_;}
 	bool initiatesEMShower() const {return initiatesEMShower_;}
 	bool inHadronicShower() const {return inHadronicShower_;}
 	
@@ -52,7 +52,7 @@ namespace hadshowertuning
 	int firstInBranchIndex_;
 	int particleIndex_;
 	int parentIndex_;
-	bool isPartOfEMShower_;
+	bool inEMShower_;
 	bool initiatesEMShower_;
 	bool inHadronicShower_;
   };

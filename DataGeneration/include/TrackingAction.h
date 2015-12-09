@@ -16,7 +16,7 @@ namespace hadshowertuning
 	virtual void PreUserTrackingAction(const G4Track*);
 	virtual void PostUserTrackingAction(const G4Track*);
     private:
-	TrackInformation * storeParticle(G4Track * aTrack,int parentIndex);
+	void storeParticle(G4Track * aTrack,int parentIndex);
 	hadshowertuning::Data * fData;
 	bool fFoundShowerStart;
     };

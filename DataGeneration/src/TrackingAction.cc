@@ -20,8 +20,21 @@ TrackingAction::TrackingAction(Data * data)
   , fFoundShowerStart(false)
 {}
 
-TrackInformation * TrackingAction::storeParticle(G4Track * aTrack,int parentIndex)
+void TrackingAction::storeParticle(G4Track * aTrack,int parentIndex)
 {
+    // get user information
+    TrackInformation * info = (TrackInformation*)aTrack->GetUserInformation();
+    if(!info){
+	info = new TrackInformation();
+	aTrack->SetUserInformation(info);
+    }
+
+    // check that particle was not stored yet
+    if(info->particleIndex() >= 0){
+	std::cout << "ERROR: attempt to store particle that is stored already" << std::endl;
+	exit(1);
+    }
+
     // index of the particle
     int particleIndex = fData->particle_px.size();
     // update the data connected to the tree
@@ -36,17 +49,16 @@ TrackInformation * TrackingAction::storeParticle(G4Track * aTrack,int parentInde
     fData->particle_pdgId.push_back(aTrack->GetDynamicParticle()->GetPDGcode());
     fData->particle_kinE.push_back(aTrack->GetKineticEnergy()/GeV);
     fData->particle_parentIndex.push_back(parentIndex);
-    // update the track information
-    TrackInformation * info = (TrackInformation*)(aTrack->GetUserInformation());
+
+    // update trackinformation
     info->setFirstInBranchIndex(particleIndex);
     info->setParticleIndex(particleIndex);
-    info->setParentIndex(parentIndex);
-    return info;
+    info->setParentIndex(parentIndex); 
 }
 
 void TrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 {
-    // cheat away the constness
+    // cheat away the constness of aTrack
     G4Track * myTrack = fpTrackingManager->GetTrack();
     if(myTrack != aTrack){
 	std::cout << "Miljaarde, miljaarde" << std::endl;
@@ -56,21 +68,21 @@ void TrackingAction::PreUserTrackingAction(const G4Track* aTrack)
     if(myTrack->GetTrackID()==1)
     {
 	fFoundShowerStart = false;
-	myTrack->SetUserInformation(new TrackInformation());
 	storeParticle(myTrack,-1);
     }
+    
 }
 
 void TrackingAction::PostUserTrackingAction(const G4Track* aTrack)
 {
-    // get a non-const version of aTrack
+    // cheat away the constness of aTrack
     G4Track * myTrack = fpTrackingManager->GetTrack();
     if(myTrack != aTrack){
 	std::cout << "Miljaarde, miljaarde" << std::endl;
     }
 
     // get the track info
-    TrackInformation* myTrackInfo = (TrackInformation*)myTrack->GetUserInformation();
+    TrackInformation * myTrackInfo = (TrackInformation*)myTrack->GetUserInformation();
     
     // find secondaries
     G4TrackVector * secondaries = fpTrackingManager->GimmeSecondaries();
@@ -79,69 +91,47 @@ void TrackingAction::PostUserTrackingAction(const G4Track* aTrack)
 	return;
     }
 
-    /*
-    bool heavyStuff = myTrack->GetDynamicParticle()->GetPDGcode() == 111 && myTrack->GetKineticEnergy() > (3*GeV);
-    if(heavyStuff)
-    {
-	std::cout << "HS!!!" << std::endl;
-	std::cout << myTrack->GetTrackID() << std::endl;
-	std::cout << myTrack->GetDynamicParticle()->GetPDGcode() << std::endl;
-	std::cout << myTrack->GetKineticEnergy()/GeV << std::endl;
-    }
-    */
-
     for(auto secondary : *secondaries)
     {
 
-	// each track inherrits information from it's parent
-	TrackInformation * secondaryInfo = new TrackInformation(myTrackInfo);
+	// initiate info
+	TrackInformation * secondaryInfo = new TrackInformation();
+	// inherrit some stuff from parent particle
+	secondaryInfo->setParentIndex(myTrackInfo->particleIndex());  // -1 if parent not stored  
+	secondaryInfo->setFirstInBranchIndex(myTrackInfo->firstInBranchIndex());
+	secondaryInfo->setInEMShower(myTrackInfo->inEMShower());
+	secondaryInfo->setInHadronicShower(myTrackInfo->inHadronicShower());
 	secondary->SetUserInformation(secondaryInfo);
-	// it is not stored yet
-	secondaryInfo->setParticleIndex(-1);
-	// and the parent might be stored
-	secondaryInfo->setParentIndex(myTrackInfo->particleIndex());
-	// and we determine later whether or not this particle initiates an EM sub-shower
-	secondaryInfo->setInitiatesEMShower(false);
 
 	// the process
 	const G4VProcess * process = secondary->GetCreatorProcess();
 	
         // store particles from the first inelastic hadronic interaction
-	if( myTrack->GetTrackID() == 1   // showers must be initiated by the original particle
+	if( myTrack->GetTrackID() == 1   // to avoid weird cases: showers must be initiated by the original particle
 	    && process
 	    && process->GetProcessType() == fHadronic
 	    && dynamic_cast<const G4HadronInelasticProcess *>(process))
 	{
-	    // store the shower start
-	    const G4ThreeVector & position = secondary->GetPosition();
-	    fData->showerStart_x = position.x()/cm;
-	    fData->showerStart_y = position.y()/cm;
-	    fData->showerStart_z = position.z()/cm;
-
 	    // store secondaries
 	    storeParticle(secondary,myTrackInfo->particleIndex());
 	    secondaryInfo->setInHadronicShower(true);
 	}
 
+	// don't bother with anything that is not in the hadronic shower
+	if(!secondaryInfo->inHadronicShower())
+	    continue;
+
 	// store photons and electrons that initiate EM sub-showers
 	bool goodPhoton = 
-	    secondaryInfo->inHadronicShower()
-	    && secondary->GetDynamicParticle()->GetPDGcode() == 22
-	    && !myTrackInfo->isPartOfEMShower();
+	    secondary->GetDynamicParticle()->GetPDGcode() == 22
+	    && !myTrackInfo->inEMShower();
 	bool goodElectron =
-	    secondaryInfo->inHadronicShower()
-	    && abs(secondary->GetDynamicParticle()->GetPDGcode()) == 11
-	    && (!myTrackInfo->isPartOfEMShower()
-		|| (myTrackInfo->initiatesEMShower() && myTrack->GetDynamicParticle()->GetPDGcode() == 22)
+	    abs(secondary->GetDynamicParticle()->GetPDGcode()) == 11
+	    && (    !myTrackInfo->inEMShower()
+		    || (    myTrackInfo->initiatesEMShower() 
+			    && myTrack->GetDynamicParticle()->GetPDGcode() == 22
+			)
 		);
-	/*
-	if(heavyStuff){
-	    std::cout << goodPhoton << " " << goodElectron << std::endl;
-	    std::cout << secondaryInfo->inHadronicShower() << std::endl;
-	    std::cout << secondary->GetDynamicParticle()->GetPDGcode() << std::endl;
-	    std::cout << !myTrackInfo->isPartOfEMShower() << std::endl;
-	}
-	*/
 	if ( goodPhoton || goodElectron )
 	{
 	    // store parent track if not yet done
@@ -150,15 +140,39 @@ void TrackingAction::PostUserTrackingAction(const G4Track* aTrack)
 		storeParticle(myTrack,myTrackInfo->parentIndex());
 	    }
 	    // store photon / electron if not yet done
-	    if(secondaryInfo->particleIndex() < 0){
+	    if(secondaryInfo->particleIndex() < 0)
+	    {
 		storeParticle(secondary,myTrackInfo->particleIndex());
 	    }
 	    // this particle is part of an EM shower
-	    secondaryInfo->setIsPartOfEMShower();
+	    secondaryInfo->setInEMShower();
 	    // and it might have initiated an EM shower
-	    if(!myTrackInfo->isPartOfEMShower())  
+	    if(!myTrackInfo->inEMShower())  
 	    {
 		secondaryInfo->setInitiatesEMShower();
+	    }
+	}
+
+	// store all pi0 and eta mesons
+	if(secondary->GetDynamicParticle()->GetPDGcode() == 221 // eta
+	   || secondary->GetDynamicParticle()->GetPDGcode() == 111) // pi0
+	{
+	    // store photon / electron if not yet done
+	    if(secondaryInfo->particleIndex() < 0)
+	    {
+		storeParticle(secondary,myTrackInfo->particleIndex());
+	    }
+	}
+	    
+
+	// store all dauthers of eta and pi0 mesons
+	if(myTrack->GetDynamicParticle()->GetPDGcode() == 221
+	   || myTrack->GetDynamicParticle()->GetPDGcode() == 221)
+	{
+	    if(secondaryInfo->particleIndex() < 0)
+	    {
+		storeParticle(secondary,myTrackInfo->particleIndex());
+		
 	    }
 	}
     }

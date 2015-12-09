@@ -6,6 +6,7 @@
 
 
 class TTree;
+class TFile;
 
 namespace hadshowertuning{
 
@@ -14,11 +15,12 @@ namespace hadshowertuning{
     class EventAction : public G4UserEventAction
     {
 	public:
-	EventAction(TTree * tree,Data * data);
+	EventAction(TFile * f,TTree * tree,Data * data);
 	virtual ~EventAction(){;}
 	virtual void  BeginOfEventAction(const G4Event*);
 	virtual void  EndOfEventAction(const G4Event*);
 	private:
+	TFile * fFile;
 	TTree * fTree;
 	Data * fData;
     };

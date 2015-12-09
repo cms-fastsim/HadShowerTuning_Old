@@ -2,6 +2,7 @@
 #define HADSHOWERTUNING_SteppingAction_h
 
 #include "G4UserSteppingAction.hh"
+#include "G4ThreeVector.hh"
 
 class G4Step;
 class G4VPhysicalVolume;
@@ -28,6 +29,9 @@ namespace hadshowertuning
 	Data * fData;
 	bool fFoundShowerStart;
 	const std::map<const G4VPhysicalVolume * , int > * fVolumeIdMap;
+	int fCurrentG4TrackID;
+	G4VPhysicalVolume * fCurrentVolume;
+	G4ThreeVector fFirstStepInHitPos;
     };
 }
 
