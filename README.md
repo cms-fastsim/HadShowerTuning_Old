@@ -103,12 +103,46 @@ particle_kinE        # vector<float>
 particle_parentIndex # vector<int>
 ```
 
-how to find the shower start?
+### how to find the shower start?
+
+The datas format is defined such that the first particle in each shower is the primary,
+and the next few particles are the products of the first inelastic hadronic interaction of the primary.
+Therefore, the position of the shower start can be found as follows:
+
 ```
-showerStart_x = particle_x[1]
-showerStart_y = particle_x[1]
-showerStart_z = particle_x[1]
+if len(paritcles_x) > 1:  # check that there was a first inelastic hadronic interaction
+    showerStart_x = particle_x[1]
+    showerStart_y = particle_x[1]
+    showerStart_z = particle_x[1]
 ```
+
+## Compressed tuning data
+
+### Location
+
+/afs/cern.ch/work/l/lveldere/public/hadshowertuningdata_compressed_V1.tgz
+
+Yntar to find 200 root files.
+Each root file contains data for 500 showers.
+The primaries are all charged pions.
+The energy of the primaries can be extracted from the file name.
+
+### Format
+
+Each root file contains directory per shower.
+
+Each directory contains 
+   * finely binned longitudinal energy profiles (TH1F) for
+      * longEProf_fineBin_mip: primary and secondaries outside the shower
+      * longEProf_fineBin_pi0_1: shower from hardest pi0 inside the hadronic shower
+      * longEProf_fineBin_pi0_2: shower from 2nd hardest pi0 inside the hadronic shower
+      * longEProf_fineBin_had: anything else
+   * longitudinal energy profiles (TH1F), one bin per detector layer 
+      * longEProf_perLayer_* (see explanation above)
+   * showerStart: position of shower start (TVector3)
+   * vertex_pi0_1: shower from hardest pi0 (TVector3)
+   * vector_pi0_2: shower from 2nd hardest pi0 (TVector3)
+    
 
 
 
