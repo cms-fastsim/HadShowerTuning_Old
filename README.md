@@ -116,6 +116,29 @@ if len(paritcles_x) > 1:  # check that there was a first inelastic hadronic inte
     showerStart_z = particle_x[1]
 ```
 
+## Compressed tuning data
+
+### Location
+
+/afs/cern.ch/work/l/lveldere/public/hadshowertuningdata_compressed_V1.tgz
+
+### Format
+
+Each file contains one directory per shower.
+
+Each directory contains 
+   * finely binned longitudinal energy profiles (TH1F) for
+      * longEProf_fineBin_mip: primary and secondaries outside the shower
+      * longEProf_fineBin_pi0_1: shower from hardest pi0 inside the hadronic shower
+      * longEProf_fineBin_pi0_2: shower from 2nd hardest pi0 inside the hadronic shower
+      * longEProf_fineBin_had: anything else
+   * longitudinal energy profiles (TH1F), one bin per detector layer 
+      * longEProf_perLayer_* (see explanation above)
+   * showerStart: position of shower start (TVector3)
+   * vertex_pi0_1: shower from hardest pi0 (TVector3)
+   * vector_pi0_2: shower from 2nd hardest pi0 (TVector3)
+    
+
 
 
 
