@@ -120,9 +120,9 @@ if len(paritcles_x) > 1:  # check that there was a first inelastic hadronic inte
 
 ### Location
 
-/afs/cern.ch/work/l/lveldere/public/hadshowertuningdata_compressed_V1.tgz
+/afs/cern.ch/work/l/lveldere/public/hadshowertuningdata_compressed_V2.tar
 
-Yntar to find 200 root files.
+Untar to find 418 root files.
 Each root file contains data for 500 showers.
 The primaries are all charged pions.
 The energy of the primaries can be extracted from the file name.
@@ -140,6 +140,9 @@ Each directory contains
    * longitudinal energy profiles (TH1F), one bin per detector layer 
       * longEProf_perLayer_* (see explanation above)
    * showerStart: position of shower start (TVector3)
+   * primary_atEndVertex_position : position of the primary where it dies in geant4 (usualy the shower start, but low energy particles may loose all energy before the shower starts) (TVector3)
+   * primary_atEndVertex_momentum : momentum of the primary where it stops existing before it dies in geant4 (TVector3)
+   * primary_atEndVertex_kinE : first element of this vector is the kinematic energy of the particle before it dies in geant4 (TVectorT<double>)
    * vertex_pi0_1: shower from hardest pi0 (TVector3)
    * vector_pi0_2: shower from 2nd hardest pi0 (TVector3)
     
