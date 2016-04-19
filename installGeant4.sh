@@ -1,5 +1,5 @@
 mypwd=$PWD
-G4VERSION="10.01.p02"
+G4VERSION="10.02.p01"
 tar -xzf geant4.$G4VERSION.tar.gz
 mkdir geant4.$G4VERSION-build
 cd geant4.$G4VERSION-build
