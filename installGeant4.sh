@@ -8,8 +8,8 @@ cmake \
 -DGEANT4_USE_OPENGL_X11=ON \
 -DGEANT4_INSTALL_DATA=ON \
 -DGEANT4_USE_GDML=ON \
--DXERCESC_LIBRARY=$CMSSW_RELEASE_BASE/../../../external/xerces-c/2.8.0-cms/lib/libxerces-c.so \
--DXERCESC_INCLUDE_DIR=$CMSSW_RELEASE_BASE/../../../external/xerces-c/2.8.0-cms/include/ \
+-DXERCESC_LIBRARY=$CMSSW_RELEASE_BASE/../../../external/xerces-c/2.8.0/lib/libxerces-c.so \
+-DXERCESC_INCLUDE_DIR=$CMSSW_RELEASE_BASE/../../../external/xerces-c/2.8.0/include/ \
 -DGEANT4_BUILD_CXXSTD=c++11 \
 $mypwd/geant4.$G4VERSION
 make -j 12
