@@ -1,4 +1,4 @@
-echo mypwd=$PWD > setenv.sh
+echo "mypwd=\$PWD" > setenv.sh
 echo "cd $CMSSW_BASE/src" >> setenv.sh
 echo "cmsenv" >> setenv.sh
 echo "cd \$mypwd" >> setenv.sh

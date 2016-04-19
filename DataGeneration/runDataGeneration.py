@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# run shower generation
+#  - prepare a geant4 macro
+#  - run the 'DataGeneration' executable with the proper arguments
+
 import argparse,os
 parser = argparse.ArgumentParser()
 parser.add_argument("--nevents",type=int,help="number of events (default: %(default)i)",default=10)
@@ -36,7 +40,7 @@ print "=== END   MACROFILE ==="
 
 logfile = args.ofile + ".log"
 
-command = "/nfs/dust/cms/user/lveldere/FastSimDev_Oct/g4fresh/HadShowerTuning/DataGeneration-build/DataGeneration oFile={oFile} g4Macro={g4Macro} seed={seed} geometry={geometry}".format(
+command = os.environ["HADSHOWERTUNINGDIR"] + "/DataGeneration-build/DataGeneration oFile={oFile} g4Macro={g4Macro} seed={seed} geometry={geometry}".format(
     oFile=args.ofile,seed=args.seed,geometry=args.geometry,g4Macro=macrofile)
 bigCommand = "(time " + command + ")"
 if args.swallowlogs:

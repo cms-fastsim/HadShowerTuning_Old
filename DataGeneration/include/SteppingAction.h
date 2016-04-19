@@ -1,3 +1,11 @@
+/*!
+ *   user action class to 
+ *    - gather simHit level data
+ *    - store state of primary at particular positions
+ *       - entry and exit ecal
+ *       - entry hcal
+ */
+
 #ifndef HADSHOWERTUNING_SteppingAction_h
 #define HADSHOWERTUNING_SteppingAction_h
 
@@ -21,17 +29,15 @@ namespace hadshowertuning
 	
 	SteppingAction(Data * data,const std::map<const G4VPhysicalVolume*,int> * volumeIdMap);
 	~SteppingAction(){};
+        // each G4Step is considered as a hit
+        // and stored in the fData->hit_* vectors
+        // in addition, store a couple of extra particles
 	virtual void UserSteppingAction(const G4Step*);
 	
     private:
 	
-	int storeParticle(const G4Track * aTrack,int parentIndex);
 	Data * fData;
-	bool fFoundShowerStart;
 	const std::map<const G4VPhysicalVolume * , int > * fVolumeIdMap;
-	int fCurrentG4TrackID;
-	G4VPhysicalVolume * fCurrentVolume;
-	G4ThreeVector fFirstStepInHitPos;
     };
 }
 

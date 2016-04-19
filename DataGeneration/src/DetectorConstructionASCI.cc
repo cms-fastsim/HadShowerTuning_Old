@@ -1,4 +1,4 @@
-#include "DetectorConstructionASCI.hh"
+#include "DetectorConstructionASCI.h"
 
 #include "G4SystemOfUnits.hh"
 #include "G4tgbVolumeMgr.hh"
@@ -12,15 +12,16 @@
 
 using namespace hadshowertuning;
 
-DetectorConstructionASCI::DetectorConstructionASCI() 
+DetectorConstructionASCI::DetectorConstructionASCI(std::string geometryFile) 
  : G4VUserDetectorConstruction()
+ , geometryFile_(geometryFile)
 {}
 
-G4VPhysicalVolume * DetectorConstructionASCI::Construct(){
-
-  G4String filename = "/nfs/dust/cms/user/lveldere/FastSimDev_Oct/g4fresh/HadShowerTuning/DataGeneration-build/geometry.txt";
-  G4tgbVolumeMgr* volmgr = G4tgbVolumeMgr::GetInstance();
-  volmgr->AddTextFile(filename);
-  fWorld = volmgr->ReadAndConstructDetector();
-  return fWorld;
+G4VPhysicalVolume * DetectorConstructionASCI::Construct()
+{
+    G4String filename = geometryFile_;
+    G4tgbVolumeMgr* volmgr = G4tgbVolumeMgr::GetInstance();
+    volmgr->AddTextFile(filename);
+    fWorld = volmgr->ReadAndConstructDetector();
+    return fWorld;
 }

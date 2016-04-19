@@ -47,7 +47,7 @@ target_link_libraries(DataGeneration ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
 # relies on these scripts being in the current working directory.
 #
 set(SCRIPTS
-	geometry.txt vis.mac runDataGeneration.py)
+	createGeometry.py vis.mac runDataGeneration.py)
 
 foreach(_script ${SCRIPTS})
   configure_file(
