@@ -36,10 +36,13 @@ and store it in your current directory (filename geant4.10.01.p02.tar.gz).
 Install
 
 ```
+cd /to/where/ever/you/want/to/install/geant4
+wget http://geant4.cern.ch/support/source/geant4.10.02.p01.tar.gz
+tar -xzf geant4.10.02.p01.tar.gz
 source /path/to/.../HadShower/installGeant4.sh
 ```
 
-Now you should have geant4 installed under $PWD/geant4.10.01.p02-install
+Now you should have geant4 installed under $PWD/geant4.10.02.p01-install
 
 **Note**: things will also work with many other Geant4 versions,
 but you'll have to edit the installGeant4.sh file to account for the different version number in paths.
