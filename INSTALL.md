@@ -47,6 +47,14 @@ Now you should have geant4 installed under $PWD/geant4.10.02.p01-install
 **Note**: things will also work with many other Geant4 versions,
 but you'll have to edit the installGeant4.sh file to account for the different version number in paths.
 
+**Troubleshooting**: Installation on lxplus can be problematic.
+
+   * **segmentation violation during compilation**
+      * in installGeant4.sh verify that the options of cmake make sense. i.e. check that the paths actually exist. In case corrections are required, remove all geant4* directories and run installGeant4.sh again
+      * if segmentation violations perist, probably there is still something wrong with the cmake arguments. You could try compiling anyways as follows: Go into the directory geant4.10.02.p01-install and resume compilation (make -j 8). Repeat this after every other segmentation violation, until compilation is done. Finally install (make install)
+   * **compilation complaints about truncated files**
+      * find the truncated file, remove it, resume compilation (cd geant4.10.02.p01-install;make -j 8) and install (make install)  
+
 ## Setup the HadShowerTuning package
 
    * make sure the CMSSW environment is properly setup
